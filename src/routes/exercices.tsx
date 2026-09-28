@@ -128,13 +128,22 @@ function ExerciseCard({
         <span className="text-xs text-muted-foreground">{exercise.chapter}</span>
       </div>
       <p className="mt-3 text-sm leading-relaxed text-foreground">{exercise.statement}</p>
-      <button
-        type="button"
-        onClick={() => onCopy(exercise.id)}
-        className="mt-4 inline-flex items-center gap-2 rounded-lg border border-primary/30 px-3.5 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
-      >
-        {copied ? "Copié ✓" : "Copier l'ID"}
-      </button>
+      {exercise.status === "preparation" ? (
+        <span
+          aria-disabled="true"
+          className="mt-4 inline-flex cursor-not-allowed items-center gap-2 rounded-lg border border-border bg-muted px-3.5 py-2 text-sm font-semibold text-muted-foreground opacity-70"
+        >
+          Bientôt disponible
+        </span>
+      ) : (
+        <button
+          type="button"
+          onClick={() => onCopy(exercise.id)}
+          className="mt-4 inline-flex items-center gap-2 rounded-lg border border-primary/30 px-3.5 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
+        >
+          {copied ? "Copié ✓" : "Copier l'ID"}
+        </button>
+      )}
     </article>
   );
 }

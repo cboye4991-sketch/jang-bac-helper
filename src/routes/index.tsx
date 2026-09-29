@@ -1,10 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  HeroIllustration,
-  IconAmpoule,
-  IconEnvoyer,
-  IconListe,
-} from "@/components/Illustrations";
+import { HeroIllustration, IconAmpoule, IconEnvoyer, IconListe } from "@/components/Illustrations";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -63,12 +58,11 @@ function Index() {
         <div className="mx-auto grid max-w-5xl gap-10 px-4 py-14 sm:grid-cols-[1.15fr_1fr] sm:items-center sm:py-20">
           <div>
             <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
-              Tu révises seul ?{" "}
-              <span className="text-primary">Jàng te dit où tu t'es trompé.</span>
+              Tu révises seul ? <span className="text-primary">Jàng te dit où tu t'es trompé.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Envoie ta réponse à un exercice du Bac, reçois ta première erreur expliquée
-              et un exercice pour t'entraîner. Gratuit, sans application à installer.
+              Envoie ta réponse à un exercice du Bac, reçois ta première erreur expliquée et un
+              exercice pour t'entraîner. Gratuit, sans application à installer.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -138,8 +132,8 @@ function Index() {
             Tu es professeur ?
           </h2>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Aide-nous à valider les corrigés pour que les élèves de Terminale révisent
-            avec des réponses sûres.
+            Aide-nous à valider les corrigés pour que les élèves de Terminale révisent avec des
+            réponses sûres.
           </p>
           <Link
             to="/contact"

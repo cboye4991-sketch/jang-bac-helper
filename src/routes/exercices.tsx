@@ -132,29 +132,29 @@ function ExerciseCard({
           </p>
           <StatusBadge status={exercise.status} />
         </div>
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        <span className="rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-secondary-foreground">
-          {exercise.subject}
-        </span>
-        <span className="text-xs text-muted-foreground">{exercise.chapter}</span>
-      </div>
-      <p className="mt-3 text-sm leading-relaxed text-foreground">{exercise.statement}</p>
-      {exercise.status === "preparation" ? (
-        <span
-          aria-disabled="true"
-          className="mt-4 inline-flex cursor-not-allowed items-center gap-2 rounded-lg border border-border bg-muted px-3.5 py-2 text-sm font-semibold text-muted-foreground opacity-70"
-        >
-          Bientôt disponible
-        </span>
-      ) : (
-        <button
-          type="button"
-          onClick={() => onCopy(exercise.id)}
-          className="mt-4 inline-flex items-center gap-2 rounded-lg border border-primary/30 px-3.5 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
-        >
-          {copied ? "Copié ✓" : "Copier l'ID"}
-        </button>
-      )}
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-secondary-foreground">
+            {exercise.subject}
+          </span>
+          <span className="text-xs text-muted-foreground">{exercise.chapter}</span>
+        </div>
+        <p className="mt-3 text-sm leading-relaxed text-foreground">{exercise.statement}</p>
+        {exercise.status === "preparation" ? (
+          <span
+            aria-disabled="true"
+            className="mt-4 inline-flex cursor-not-allowed items-center gap-2 rounded-lg border border-border bg-muted px-3.5 py-2 text-sm font-semibold text-muted-foreground opacity-70"
+          >
+            Bientôt disponible
+          </span>
+        ) : (
+          <button
+            type="button"
+            onClick={() => onCopy(exercise.id)}
+            className="mt-4 inline-flex items-center gap-2 rounded-lg border border-primary/30 px-3.5 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
+          >
+            {copied ? "Copié ✓" : "Copier l'ID"}
+          </button>
+        )}
       </div>
     </article>
   );
@@ -193,8 +193,7 @@ function Exercices() {
     timerRef.current = setTimeout(() => setCopiedId(null), 2000);
   }
 
-  const visible =
-    filter === "Tous" ? EXERCISES : EXERCISES.filter((e) => e.subject === filter);
+  const visible = filter === "Tous" ? EXERCISES : EXERCISES.filter((e) => e.subject === filter);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:py-14">

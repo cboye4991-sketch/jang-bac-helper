@@ -59,17 +59,65 @@ export function HeroIllustration({ className }: { className?: string }) {
           stroke="var(--border)"
           strokeWidth="2"
         />
-        <line x1="127" y1="205" x2="172" y2="205" stroke="var(--border)" strokeWidth="2.5" strokeLinecap="round" />
-        <line x1="127" y1="214" x2="164" y2="214" stroke="var(--border)" strokeWidth="2.5" strokeLinecap="round" />
-        <line x1="127" y1="223" x2="156" y2="223" stroke="var(--border)" strokeWidth="2.5" strokeLinecap="round" />
+        <line
+          x1="127"
+          y1="205"
+          x2="172"
+          y2="205"
+          stroke="var(--border)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+        />
+        <line
+          x1="127"
+          y1="214"
+          x2="164"
+          y2="214"
+          stroke="var(--border)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+        />
+        <line
+          x1="127"
+          y1="223"
+          x2="156"
+          y2="223"
+          stroke="var(--border)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+        />
       </g>
 
       {/* Téléphone Android */}
       <rect x="196" y="166" width="32" height="58" rx="8" fill="var(--foreground)" />
       <rect x="200" y="172" width="24" height="42" rx="4" fill="var(--card)" />
-      <line x1="204" y1="182" x2="220" y2="182" stroke="var(--border)" strokeWidth="2.5" strokeLinecap="round" />
-      <line x1="204" y1="190" x2="216" y2="190" stroke="var(--border)" strokeWidth="2.5" strokeLinecap="round" />
-      <line x1="204" y1="198" x2="218" y2="198" stroke="var(--border)" strokeWidth="2.5" strokeLinecap="round" />
+      <line
+        x1="204"
+        y1="182"
+        x2="220"
+        y2="182"
+        stroke="var(--border)"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+      />
+      <line
+        x1="204"
+        y1="190"
+        x2="216"
+        y2="190"
+        stroke="var(--border)"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+      />
+      <line
+        x1="204"
+        y1="198"
+        x2="218"
+        y2="198"
+        stroke="var(--border)"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+      />
       <circle cx="212" cy="220" r="1.8" fill="var(--border)" />
 
       {/* Main qui tient le téléphone */}
@@ -77,8 +125,23 @@ export function HeroIllustration({ className }: { className?: string }) {
 
       {/* Bulle 1 : réponse fausse (❌) */}
       <g>
-        <path d="M228 140 l -12 26 l 26 -10 Z" fill="var(--card)" stroke="var(--border)" strokeWidth="2" strokeLinejoin="round" />
-        <rect x="218" y="98" width="96" height="44" rx="15" fill="var(--card)" stroke="var(--border)" strokeWidth="2" />
+        <path
+          d="M228 140 l -12 26 l 26 -10 Z"
+          fill="var(--card)"
+          stroke="var(--border)"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+        <rect
+          x="218"
+          y="98"
+          width="96"
+          height="44"
+          rx="15"
+          fill="var(--card)"
+          stroke="var(--border)"
+          strokeWidth="2"
+        />
         <path
           d="M258 112 l 16 16 M274 112 l -16 16"
           stroke="var(--destructive)"

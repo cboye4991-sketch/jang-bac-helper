@@ -107,9 +107,9 @@ export function ChatJang({
             className="flex items-center gap-1 self-start rounded-lg rounded-tl-none bg-card px-3 py-3 shadow-sm"
             aria-label="Jàng écrit…"
           >
-            <span className="typing-dot" />
-            <span className="typing-dot [animation-delay:0.15s]" />
-            <span className="typing-dot [animation-delay:0.3s]" />
+            <span className="h-2 w-2 animate-bounce rounded-full bg-muted-foreground" />
+            <span className="h-2 w-2 animate-bounce rounded-full bg-muted-foreground [animation-delay:0.15s]" />
+            <span className="h-2 w-2 animate-bounce rounded-full bg-muted-foreground [animation-delay:0.3s]" />
           </div>
         )}
       </div>

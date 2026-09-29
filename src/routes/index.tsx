@@ -35,14 +35,17 @@ const STEPS = [
   {
     title: "Choisis un exercice",
     body: "Repère l'ID de l'exercice qui t'intéresse dans la liste (ex. JNG-PC-01).",
+    Icon: IconListe,
   },
   {
     title: "Envoie l'ID et ta réponse",
     body: "Écris ta réponse comme tu l'aurais fait sur ta copie, depuis ton téléphone.",
+    Icon: IconEnvoyer,
   },
   {
     title: "Reçois ta première erreur",
     body: "Jàng te dit où tu t'es trompé, explique la méthode et te donne un exercice similaire.",
+    Icon: IconAmpoule,
   },
 ];
 

@@ -155,6 +155,7 @@ function ExerciseCard({
           {copied ? "Copié ✓" : "Copier l'ID"}
         </button>
       )}
+      </div>
     </article>
   );
 }

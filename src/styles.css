@@ -31,6 +31,7 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-success: var(--success);
   --color-banner: var(--banner);
+  --color-chat: var(--chat);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -63,6 +64,7 @@
   --success: oklch(0.53 0.13 152);
   /* #DCF8C6 — vert clair de la bannière d'accueil */
   --banner: oklch(0.955 0.064 126);
+  --chat: oklch(0.925 0.016 75);
   --destructive: oklch(0.55 0.19 27);
   --destructive-foreground: oklch(0.99 0 0);
   --border: oklch(0.918 0.014 172);

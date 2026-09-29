@@ -77,6 +77,15 @@ function Index() {
         </div>
       </section>
 
+      {/* Bannière avantages */}
+      <section className="bg-banner">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-2 px-4 py-3 text-sm font-medium text-foreground sm:flex-row sm:justify-center sm:gap-6">
+          <span>📶 Moins de 100 Ko par correction</span>
+          <span>📱 Aucune application à installer</span>
+          <span>🆓 Gratuit pour l'élève</span>
+        </div>
+      </section>
+
       {/* Comment ça marche */}
       <section className="mx-auto max-w-5xl px-4 py-14 sm:py-20">
         <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">

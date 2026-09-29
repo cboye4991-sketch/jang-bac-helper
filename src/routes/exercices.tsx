@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { ChatJang } from "@/components/ChatJang";
+import { SubjectIcon } from "@/components/Illustrations";
 
 export const Route = createFileRoute("/exercices")({
   head: () => ({
@@ -105,6 +106,12 @@ function StatusBadge({ status }: { status: Status }) {
   );
 }
 
+const SUBJECT_STYLES = {
+  Chimie: "bg-subject-chimie",
+  Physique: "bg-subject-physique",
+  Maths: "bg-subject-maths",
+} as const;
+
 function ExerciseCard({
   exercise,
   copied,
@@ -115,13 +122,16 @@ function ExerciseCard({
   onCopy: (id: string) => void;
 }) {
   return (
-    <article className="rounded-2xl border border-border bg-card p-5">
-      <div className="flex flex-wrap items-start justify-between gap-2">
-        <p className="font-mono text-sm font-bold tracking-wide text-primary">
-          {exercise.id}
-        </p>
-        <StatusBadge status={exercise.status} />
-      </div>
+    <article className="overflow-hidden rounded-2xl border border-border bg-card">
+      <div aria-hidden className={`h-1.5 w-full ${SUBJECT_STYLES[exercise.subject]}`} />
+      <div className="p-5">
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <p className="flex items-center gap-1.5 font-mono text-sm font-bold tracking-wide text-primary">
+            <SubjectIcon subject={exercise.subject} />
+            {exercise.id}
+          </p>
+          <StatusBadge status={exercise.status} />
+        </div>
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <span className="rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-secondary-foreground">
           {exercise.subject}

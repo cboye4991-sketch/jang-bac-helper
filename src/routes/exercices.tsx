@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
+import { ChatJang } from "@/components/ChatJang";
 
 export const Route = createFileRoute("/exercices")({
   head: () => ({
@@ -151,9 +152,14 @@ function ExerciseCard({
 function Exercices() {
   const [filter, setFilter] = useState<Filter>("Tous");
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [chatInput, setChatInput] = useState("");
+  const chatInputRef = useRef<HTMLTextAreaElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   async function copyId(id: string) {
+    setChatInput(`${id} : `);
+    chatInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(() => chatInputRef.current?.focus({ preventScroll: true }), 300);
     try {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(id);
@@ -168,12 +174,12 @@ function Exercices() {
         document.execCommand("copy");
         document.body.removeChild(textarea);
       }
-      setCopiedId(id);
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => setCopiedId(null), 2000);
     } catch {
-      // Copie indisponible sur ce navigateur : l'ID reste visible sur la carte.
+      // Copie indisponible : le champ est quand même rempli.
     }
+    setCopiedId(id);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setCopiedId(null), 2000);
   }
 
   const visible =
@@ -188,7 +194,9 @@ function Exercices() {
         Choisis ton exercice, copie son ID, puis envoie l'ID et ta réponse.
       </p>
 
-      <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filtrer par matière">
+      <ChatJang input={chatInput} setInput={setChatInput} inputRef={chatInputRef} />
+
+      <div className="mt-8 flex flex-wrap gap-2" role="group" aria-label="Filtrer par matière">
         {FILTERS.map((f) => (
           <button
             key={f}

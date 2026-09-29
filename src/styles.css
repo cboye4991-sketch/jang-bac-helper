@@ -32,6 +32,9 @@
   --color-success: var(--success);
   --color-banner: var(--banner);
   --color-chat: var(--chat);
+  --color-subject-chimie: var(--subject-chimie);
+  --color-subject-physique: var(--subject-physique);
+  --color-subject-maths: var(--subject-maths);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);

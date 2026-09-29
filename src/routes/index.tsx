@@ -1,4 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  HeroIllustration,
+  IconAmpoule,
+  IconEnvoyer,
+  IconListe,
+} from "@/components/Illustrations";
 
 export const Route = createFileRoute("/")({
   head: () => ({

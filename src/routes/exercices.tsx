@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { ChatJang } from "@/components/ChatJang";
+import { SubjectIcon } from "@/components/Illustrations";
 
 export const Route = createFileRoute("/exercices")({
   head: () => ({
@@ -105,6 +106,12 @@ function StatusBadge({ status }: { status: Status }) {
   );
 }
 
+const SUBJECT_STYLES = {
+  Chimie: "bg-subject-chimie",
+  Physique: "bg-subject-physique",
+  Maths: "bg-subject-maths",
+} as const;
+
 function ExerciseCard({
   exercise,
   copied,
@@ -115,36 +122,40 @@ function ExerciseCard({
   onCopy: (id: string) => void;
 }) {
   return (
-    <article className="rounded-2xl border border-border bg-card p-5">
-      <div className="flex flex-wrap items-start justify-between gap-2">
-        <p className="font-mono text-sm font-bold tracking-wide text-primary">
-          {exercise.id}
-        </p>
-        <StatusBadge status={exercise.status} />
+    <article className="overflow-hidden rounded-2xl border border-border bg-card">
+      <div aria-hidden className={`h-1.5 w-full ${SUBJECT_STYLES[exercise.subject]}`} />
+      <div className="p-5">
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <p className="flex items-center gap-1.5 font-mono text-sm font-bold tracking-wide text-primary">
+            <SubjectIcon subject={exercise.subject} />
+            {exercise.id}
+          </p>
+          <StatusBadge status={exercise.status} />
+        </div>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-secondary-foreground">
+            {exercise.subject}
+          </span>
+          <span className="text-xs text-muted-foreground">{exercise.chapter}</span>
+        </div>
+        <p className="mt-3 text-sm leading-relaxed text-foreground">{exercise.statement}</p>
+        {exercise.status === "preparation" ? (
+          <span
+            aria-disabled="true"
+            className="mt-4 inline-flex cursor-not-allowed items-center gap-2 rounded-lg border border-border bg-muted px-3.5 py-2 text-sm font-semibold text-muted-foreground opacity-70"
+          >
+            Bientôt disponible
+          </span>
+        ) : (
+          <button
+            type="button"
+            onClick={() => onCopy(exercise.id)}
+            className="mt-4 inline-flex items-center gap-2 rounded-lg border border-primary/30 px-3.5 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
+          >
+            {copied ? "Copié ✓" : "Copier l'ID"}
+          </button>
+        )}
       </div>
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        <span className="rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-secondary-foreground">
-          {exercise.subject}
-        </span>
-        <span className="text-xs text-muted-foreground">{exercise.chapter}</span>
-      </div>
-      <p className="mt-3 text-sm leading-relaxed text-foreground">{exercise.statement}</p>
-      {exercise.status === "preparation" ? (
-        <span
-          aria-disabled="true"
-          className="mt-4 inline-flex cursor-not-allowed items-center gap-2 rounded-lg border border-border bg-muted px-3.5 py-2 text-sm font-semibold text-muted-foreground opacity-70"
-        >
-          Bientôt disponible
-        </span>
-      ) : (
-        <button
-          type="button"
-          onClick={() => onCopy(exercise.id)}
-          className="mt-4 inline-flex items-center gap-2 rounded-lg border border-primary/30 px-3.5 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
-        >
-          {copied ? "Copié ✓" : "Copier l'ID"}
-        </button>
-      )}
     </article>
   );
 }
@@ -182,8 +193,7 @@ function Exercices() {
     timerRef.current = setTimeout(() => setCopiedId(null), 2000);
   }
 
-  const visible =
-    filter === "Tous" ? EXERCISES : EXERCISES.filter((e) => e.subject === filter);
+  const visible = filter === "Tous" ? EXERCISES : EXERCISES.filter((e) => e.subject === filter);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:py-14">

@@ -32,6 +32,9 @@
   --color-success: var(--success);
   --color-banner: var(--banner);
   --color-chat: var(--chat);
+  --color-subject-chimie: var(--subject-chimie);
+  --color-subject-physique: var(--subject-physique);
+  --color-subject-maths: var(--subject-maths);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -70,6 +73,12 @@
   --border: oklch(0.918 0.014 172);
   --input: oklch(0.918 0.014 172);
   --ring: oklch(0.52 0.099 172.5);
+  /* Couleurs des matières — bandes et icônes des cartes d'exercices */
+  --subject-chimie: oklch(0.606 0.252 292.7); /* #8B5CF6 violet */
+  --subject-physique: oklch(0.685 0.169 237.3); /* #0EA5E9 bleu */
+  --subject-maths: oklch(0.769 0.188 70.8); /* #F59E0B orange */
+  /* Peau de l'illustration du héros */
+  --skin: oklch(0.68 0.1 55);
 }
 
 @layer base {

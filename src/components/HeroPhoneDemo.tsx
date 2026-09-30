@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 export function HeroPhoneDemo() {
   const [replay, setReplay] = useState(0);
@@ -50,7 +50,7 @@ export function HeroPhoneDemo() {
   );
 }
 
-function CorrectionLine({ tone, title, children }: { tone: "success" | "correction" | "maths" | "physique"; title: string; children: React.ReactNode }) {
+function CorrectionLine({ tone, title, children }: { tone: "success" | "correction" | "maths" | "physique"; title: string; children: ReactNode }) {
   const tones = { success: "text-success", correction: "text-correction", maths: "text-subject-maths", physique: "text-subject-physique" };
   return (
     <div className="mb-3 last:mb-0">

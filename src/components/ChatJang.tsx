@@ -20,7 +20,12 @@ const RUBRIC_TONES: Record<string, string> = {
 
 function JangReply({ text }: { text: string }) {
   return text.split("\n").map((line, index) => {
-    const normalized = line.replace(/[*#_:]/g, " ").replace(/\s+/g, " ").trim();
+    // Retire émojis, puces et ponctuation en tête (« ✅ CE QUI EST JUSTE ») avant de reconnaître la rubrique
+    const normalized = line
+      .replace(/[*#_:]/g, " ")
+      .replace(/^[^\p{L}]+/u, "")
+      .replace(/\s+/g, " ")
+      .trim();
     const title = Object.keys(RUBRIC_TONES).find((label) => normalized.startsWith(label));
     return (
       <span key={`${index}-${line}`} className={title ? `block font-mono text-xs font-medium ${RUBRIC_TONES[title]}` : "block min-h-[1lh]"}>
@@ -78,7 +83,7 @@ export function ChatJang({
       ]);
       if (res === "timeout") reply = TROP_LONG;
       else if (res.kind === "ok") reply = res.text;
-      else if (res.kind === "refus") reply = REFUS;
+      else if (res.kind === "refus") reply = res.message || REFUS;
       else reply = INDISPO;
     } catch {
       reply = INDISPO;
@@ -112,7 +117,7 @@ export function ChatJang({
         {messages.map((m, i) => (
           <div
             key={i}
-            className={`max-w-[85%] whitespace-pre-wrap break-words rounded-lg px-3 py-2 text-sm leading-relaxed text-foreground shadow-sm ${
+            className={`chat-bubble max-w-[85%] whitespace-pre-wrap break-words rounded-lg px-3 py-2 text-sm leading-relaxed text-foreground shadow-sm ${
               m.from === "eleve"
                 ? "self-end rounded-tr-none bg-banner"
                 : "self-start rounded-tl-none bg-card"

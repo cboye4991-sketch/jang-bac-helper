@@ -3,8 +3,14 @@ import { z } from "zod";
 
 export type CorrigerResult =
   | { kind: "ok"; text: string }
-  | { kind: "refus" }
+  | { kind: "refus"; message: string }
   | { kind: "erreur" };
+
+// « INSUFFISANT : ta réponse… » → « Ta réponse… » (le mot INSUFFISANT sert au SI/SINON de Dify, pas à l'élève)
+function nettoyerRefus(brut: string): string {
+  const sans = brut.replace(/^\s*INSUFFISANT\s*[:：-]?\s*/i, "").trim();
+  return sans ? sans.charAt(0).toUpperCase() + sans.slice(1) : "";
+}
 
 export const corriger = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) =>
@@ -45,7 +51,9 @@ export const corriger = createServerFn({ method: "POST" })
       const outputs = json.data?.outputs ?? {};
       const text = typeof outputs.text === "string" ? outputs.text.trim() : "";
       if (text) return { kind: "ok", text: outputs.text as string };
-      if (outputs.message_erreur) return { kind: "refus" };
+      if (typeof outputs.message_erreur === "string" && outputs.message_erreur.trim()) {
+        return { kind: "refus", message: nettoyerRefus(outputs.message_erreur) };
+      }
       return { kind: "erreur" };
     } catch (e) {
       console.error("Dify fetch error", e);

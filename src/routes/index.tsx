@@ -127,21 +127,24 @@ function Index() {
         </ol>
       </section>
 
-      {/* Rappel contact */}
-      <section className="mx-auto max-w-5xl px-4 py-14 sm:py-20">
-        <div className="rounded-2xl border border-border bg-card p-6 sm:p-10">
-          <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-            Tu es professeur ?
+      {/* Encart professeurs — fond encre */}
+      <section className="reveal mx-auto max-w-5xl px-4 py-14 sm:py-20">
+        <div className="rounded-2xl bg-ink p-6 text-ink-foreground sm:p-10">
+          <p className="font-hand text-2xl text-correction-light" aria-hidden>
+            Vu et corrigé
+          </p>
+          <h2 className="mt-1 text-xl font-bold tracking-tight sm:text-2xl">
+            Professeur de PC ? Relisez nos corrigés.
           </h2>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Aide-nous à valider les corrigés pour que les élèves de Terminale révisent avec des
-            réponses sûres.
+          <p className="mt-2 max-w-xl text-sm leading-relaxed opacity-80 sm:text-base">
+            Chaque corrigé de Jàng attend la validation d'un professeur. Quelques minutes de relecture
+            suffisent pour que les élèves de Terminale révisent avec des réponses sûres.
           </p>
           <Link
             to="/contact"
-            className="mt-6 inline-flex items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+            className="mt-6 inline-flex items-center justify-center rounded-xl bg-ink-foreground px-6 py-3 text-sm font-semibold text-ink transition-opacity hover:opacity-90"
           >
-            Nous contacter
+            Proposer mon aide
           </Link>
         </div>
       </section>

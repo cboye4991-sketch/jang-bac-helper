@@ -124,7 +124,7 @@ export function HeroIllustration({ className }: { className?: string }) {
       <circle cx="203" cy="219" r="7" fill="var(--skin)" />
 
       {/* Bulle 1 : réponse fausse (❌) */}
-      <g>
+      <g className="bubble-1">
         <path
           d="M228 140 l -12 26 l 26 -10 Z"
           fill="var(--card)"
@@ -151,7 +151,7 @@ export function HeroIllustration({ className }: { className?: string }) {
       </g>
 
       {/* Bulle 2 : réponse juste (✅) */}
-      <g>
+      <g className="bubble-2">
         <path d="M256 76 l -16 18 l 28 -4 Z" fill="var(--banner)" />
         <rect x="234" y="38" width="88" height="40" rx="14" fill="var(--banner)" />
         <path

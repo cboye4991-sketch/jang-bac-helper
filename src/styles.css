@@ -30,6 +30,7 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-success: var(--success);
+  --color-correction: var(--correction);
   --color-banner: var(--banner);
   --color-chat: var(--chat);
   --color-subject-chimie: var(--subject-chimie);
@@ -40,43 +41,47 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-hand: "Caveat", cursive;
 }
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.21 0.02 180);
+  --background: oklch(0.979 0.005 166);
+  --foreground: oklch(0.24 0.03 164);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.21 0.02 180);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.21 0.02 180);
   /* #128C7E — vert WhatsApp foncé */
-  --primary: oklch(0.52 0.099 172.5);
+  --primary: oklch(0.49 0.095 169);
   --primary-foreground: oklch(0.99 0.002 180);
   /* Lavis teal très doux pour les sections secondaires */
-  --secondary: oklch(0.965 0.012 172);
+  --secondary: oklch(0.965 0.012 166);
   --secondary-foreground: oklch(0.36 0.055 174);
   --muted: oklch(0.965 0.012 172);
-  --muted-foreground: oklch(0.5 0.028 175);
+  --muted-foreground: oklch(0.48 0.032 164);
   /* #25D366 — accent vert vif */
   --accent: oklch(0.72 0.196 150.3);
   --accent-foreground: oklch(0.2 0.05 152);
   /* Vert lisible sur fond blanc (pastille « Corrigé disponible ») */
-  --success: oklch(0.53 0.13 152);
+  --success: oklch(0.49 0.095 169);
+  /* #D2382A — réservé aux annotations de correction */
+  --correction: oklch(0.55 0.19 31);
   /* #DCF8C6 — vert clair de la bannière d'accueil */
   --banner: oklch(0.955 0.064 126);
   --chat: oklch(0.925 0.016 75);
-  --destructive: oklch(0.55 0.19 27);
+  --destructive: oklch(0.48 0.032 164);
   --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.918 0.014 172);
-  --input: oklch(0.918 0.014 172);
-  --ring: oklch(0.52 0.099 172.5);
+  --border: oklch(0.9 0.018 166);
+  --input: oklch(0.9 0.018 166);
+  --ring: oklch(0.49 0.095 169);
   /* Couleurs des matières — bandes et icônes des cartes d'exercices */
-  --subject-chimie: oklch(0.606 0.252 292.7); /* #8B5CF6 violet */
-  --subject-physique: oklch(0.685 0.169 237.3); /* #0EA5E9 bleu */
-  --subject-maths: oklch(0.769 0.188 70.8); /* #F59E0B orange */
+  --subject-chimie: oklch(0.56 0.23 294); /* #7C4DDB */
+  --subject-physique: oklch(0.58 0.14 238); /* #0B84C6 */
+  --subject-maths: oklch(0.59 0.15 67); /* #C77700 */
   /* Peau de l'illustration du héros */
   --skin: oklch(0.68 0.1 55);
 }
@@ -87,31 +92,41 @@
   }
 
   body {
-    background-color: var(--color-background);
+    background-color: var(--background);
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 24px 24px;
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
 
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+
   ::selection {
-    background-color: oklch(0.52 0.099 172.5 / 0.2);
+    background-color: oklch(0.49 0.095 169 / 0.2);
   }
 }
 
-/* ===== Animations légères (désactivées si prefers-reduced-motion) ===== */
+:root { --grid-line: #dce8e4; }
+
 @media (prefers-reduced-motion: no-preference) {
-  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease-out, transform .6s ease-out; }
-  .reveal.is-visible { opacity: 1; transform: none; }
+  @keyframes demo-arrive { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes demo-hide { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+  @keyframes demo-draw { to { stroke-dashoffset: 0; } }
 
-  .card-lift { transition: transform .2s ease-out, box-shadow .2s ease-out; }
-  .card-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 24px -12px oklch(0.3 0.05 172 / 0.35); }
+  .demo-student { opacity: 0; animation: demo-arrive .45s ease-out .25s forwards; }
+  .demo-typing { opacity: 0; animation: demo-arrive .3s ease-out .9s forwards, demo-hide .2s ease 1.8s forwards; }
+  .demo-circle ellipse { stroke-dasharray: 220; stroke-dashoffset: 220; animation: demo-draw .7s ease 1.35s forwards; }
+  .demo-note { opacity: 0; animation: demo-arrive .3s ease 1.75s forwards; }
+  .demo-answer { opacity: 0; animation: demo-arrive .5s ease-out 2s forwards; }
+}
 
-  @keyframes jang-pop { from { opacity: 0; transform: translateY(10px) scale(.9); } to { opacity: 1; transform: none; } }
-  @keyframes jang-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-  .bubble-1, .bubble-2 { transform-box: fill-box; transform-origin: center; opacity: 0; }
-  .bubble-1 { animation: jang-pop .5s ease-out .4s forwards, jang-float 3.5s ease-in-out 1s infinite; }
-  .bubble-2 { animation: jang-pop .5s ease-out 1.1s forwards, jang-float 3.5s ease-in-out 1.7s infinite; }
-
-  @keyframes jang-slide-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-  .chat-bubble-in { animation: jang-slide-up .3s ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; }
+  .demo-typing { display: none; }
 }

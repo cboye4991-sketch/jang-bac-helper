@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { HeroIllustration, IconAmpoule, IconEnvoyer, IconListe } from "@/components/Illustrations";
+import { IconAmpoule, IconEnvoyer, IconListe } from "@/components/Illustrations";
+import { HeroPhoneDemo } from "@/components/HeroPhoneDemo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -54,11 +55,12 @@ function Index() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-secondary">
-        <div className="mx-auto grid max-w-5xl gap-10 px-4 py-14 sm:grid-cols-[1.15fr_1fr] sm:items-center sm:py-20">
+      <section>
+        <div className="mx-auto grid max-w-6xl gap-12 px-4 py-12 min-[880px]:grid-cols-[1.1fr_.9fr] min-[880px]:items-center min-[880px]:py-20">
           <div>
+            <p className="mb-5 font-mono text-xs font-medium uppercase text-primary sm:text-sm">BAC · TERMINALE S2 · PHYSIQUE-CHIMIE</p>
             <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
-              Tu révises seul ? <span className="text-primary">Jàng te dit où tu t'es trompé.</span>
+              Tu révises seul ? Jàng te montre où tu t'es <span className="relative inline-block">trompé.<svg className="absolute -bottom-2 left-0 h-3 w-full overflow-visible" viewBox="0 0 150 12" preserveAspectRatio="none" aria-hidden><path d="M2 8 C38 2, 100 11, 148 4" fill="none" stroke="var(--correction)" strokeWidth="3" strokeLinecap="round" /></svg></span>
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Envoie ta réponse à un exercice du Bac, reçois ta première erreur expliquée et un
@@ -75,20 +77,12 @@ function Index() {
                 to="/contact"
                 className="inline-flex items-center justify-center rounded-xl border border-primary/30 bg-background px-6 py-3.5 text-sm font-semibold text-primary transition-colors hover:bg-background/60 sm:text-base"
               >
-                Je suis professeur bénévole
+                Je suis professeur
               </Link>
             </div>
+            <p className="mt-7 max-w-2xl font-mono text-[11px] font-medium leading-6 text-muted-foreground sm:text-xs">✓ moins de 100 Ko par correction&nbsp;&nbsp; ✓ rien à installer&nbsp;&nbsp; ✓ gratuit pour l'élève</p>
           </div>
-          <HeroIllustration className="mx-auto w-64 max-w-full sm:w-full sm:max-w-sm" />
-        </div>
-      </section>
-
-      {/* Bannière avantages */}
-      <section className="bg-banner">
-        <div className="mx-auto flex max-w-5xl flex-col items-center gap-2 px-4 py-3 text-sm font-medium text-foreground sm:flex-row sm:justify-center sm:gap-6">
-          <span>📶 Moins de 100 Ko par correction</span>
-          <span>📱 Aucune application à installer</span>
-          <span>🆓 Gratuit pour l'élève</span>
+          <HeroPhoneDemo />
         </div>
       </section>
 

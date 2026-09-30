@@ -11,6 +11,25 @@ const REFUS =
 const INDISPO = "Jàng est indisponible pour le moment — réessaie dans une minute";
 const TROP_LONG = "La réponse prend trop de temps — réessaie";
 
+const RUBRIC_TONES: Record<string, string> = {
+  "CE QUI EST JUSTE": "text-success",
+  "TA PREMIÈRE ERREUR": "text-correction",
+  "LA MÉTHODE": "text-subject-maths",
+  "À TOI": "text-subject-physique",
+};
+
+function JangReply({ text }: { text: string }) {
+  return text.split("\n").map((line, index) => {
+    const normalized = line.replace(/[*#_:]/g, " ").replace(/\s+/g, " ").trim();
+    const title = Object.keys(RUBRIC_TONES).find((label) => normalized.startsWith(label));
+    return (
+      <span key={`${index}-${line}`} className={title ? `block font-mono text-xs font-medium ${RUBRIC_TONES[title]}` : "block min-h-[1lh]"}>
+        {line || "\u00a0"}
+      </span>
+    );
+  });
+}
+
 function getUserId() {
   const k = "jang-user-id";
   let id = localStorage.getItem(k);
@@ -73,7 +92,7 @@ export function ChatJang({
   return (
     <section
       aria-label="Corrige mon exercice"
-      className="mt-6 overflow-hidden rounded-2xl border border-border"
+      className="mx-auto mt-6 w-full max-w-[720px] overflow-hidden rounded-2xl border border-border"
     >
       <header className="flex items-center gap-3 bg-primary px-4 py-3 text-primary-foreground">
         <span aria-hidden className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/15 text-lg">
@@ -99,7 +118,7 @@ export function ChatJang({
                 : "self-start rounded-tl-none bg-card"
             }`}
           >
-            {m.text}
+            {m.from === "jang" ? <JangReply text={m.text} /> : m.text}
           </div>
         ))}
         {loading && (
@@ -132,7 +151,7 @@ export function ChatJang({
           rows={2}
           maxLength={4000}
           placeholder="JNG-PC-01 : ta réponse…"
-          className="min-h-[44px] flex-1 resize-none rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+          className="min-h-[44px] flex-1 resize-none rounded-lg border border-input bg-background px-3 py-2 font-mono text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
         />
         <button
           type="submit"

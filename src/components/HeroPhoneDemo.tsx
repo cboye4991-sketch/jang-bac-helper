@@ -37,8 +37,8 @@ export function HeroPhoneDemo() {
             <div className="demo-answer mt-5 rounded-xl rounded-tl-sm bg-card px-3 py-3 shadow-sm">
               <CorrectionLine tone="success" title="CE QUI EST JUSTE">Tu as bien calculé la quantité de matière : n = 0,05 mol.</CorrectionLine>
               <CorrectionLine tone="correction" title="TA PREMIÈRE ERREUR">Tu as utilisé 500 au lieu de convertir 500 mL en 0,500 L.</CorrectionLine>
-              <CorrectionLine tone="maths" title="LA MÉTHODE">C = n / V = 0,05 / 0,500 = 0,10 mol/L.</CorrectionLine>
-              <CorrectionLine tone="physique" title="À TOI">Recalcule maintenant le pH de la solution.</CorrectionLine>
+              <CorrectionLine tone="maths" title="LA MÉTHODE">Convertis d'abord : 500 mL = 0,500 L, puis applique C = n/V.</CorrectionLine>
+              <CorrectionLine tone="physique" title="À TOI">0,80 g de NaOH dans 250 mL : calcule C puis le pH.</CorrectionLine>
             </div>
           </div>
         </div>

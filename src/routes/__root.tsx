@@ -23,7 +23,6 @@ function SiteHeader() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
         <Link to="/" className="flex shrink-0 items-baseline gap-2">
-          <span aria-hidden className="text-xl leading-none">📘</span>
           <span className="font-display text-xl font-extrabold text-foreground">Jàng</span>
           <span className="hidden font-hand text-xl font-semibold text-correction min-[480px]:inline">apprendre</span>
         </Link>

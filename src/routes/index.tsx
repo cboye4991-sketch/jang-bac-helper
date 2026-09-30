@@ -45,12 +45,6 @@ const STEPS = [
   },
 ];
 
-const STATS = [
-  { value: "14", label: "exercices type Bac" },
-  { value: "14", label: "fiches de cours" },
-  { value: "< 100 Ko", label: "par correction" },
-];
-
 function Index() {
   return (
     <div>
@@ -86,6 +80,32 @@ function Index() {
         </div>
       </section>
 
+      <section className="border-y border-border bg-background/90">
+        <div className="mx-auto max-w-5xl px-4 py-14 sm:py-20">
+          <h2 className="max-w-3xl text-2xl font-bold leading-tight text-foreground sm:text-3xl">
+            Les annales, tu les as déjà. Ce qui manque, c'est la correction.
+          </h2>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <article className="rounded-lg border border-border bg-card p-5 sm:p-6">
+              <h3 className="text-lg font-bold text-foreground">PDF d'annales du groupe WhatsApp</h3>
+              <ul className="mt-5 space-y-3 text-sm leading-relaxed text-muted-foreground">
+                <li className="flex gap-3"><span className="font-bold text-correction" aria-hidden>✗</span><span>personne ne te dit si ta réponse est juste</span></li>
+                <li className="flex gap-3"><span className="font-bold text-correction" aria-hidden>✗</span><span>le corrigé donne tout sans expliquer</span></li>
+                <li className="flex gap-3"><span className="font-bold text-correction" aria-hidden>✗</span><span>tu recopies sans comprendre</span></li>
+              </ul>
+            </article>
+            <article className="rounded-lg border-2 border-primary bg-card p-5 sm:p-6">
+              <h3 className="text-lg font-bold text-primary">Avec Jàng</h3>
+              <ul className="mt-5 space-y-3 text-sm leading-relaxed text-foreground">
+                <li className="flex gap-3"><span className="font-bold text-primary" aria-hidden>✓</span><span>ta réponse est comparée à un corrigé de référence</span></li>
+                <li className="flex gap-3"><span className="font-bold text-primary" aria-hidden>✓</span><span>seule ta première erreur est expliquée</span></li>
+                <li className="flex gap-3"><span className="font-bold text-primary" aria-hidden>✓</span><span>un exercice similaire pour vérifier</span></li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
       {/* Comment ça marche */}
       <section className="mx-auto max-w-5xl px-4 py-14 sm:py-20">
         <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
@@ -105,18 +125,6 @@ function Index() {
             </li>
           ))}
         </ol>
-      </section>
-
-      {/* Chiffres */}
-      <section className="border-y border-border bg-secondary">
-        <div className="mx-auto grid max-w-5xl gap-6 px-4 py-10 text-center sm:grid-cols-3 sm:py-14">
-          {STATS.map((stat) => (
-            <div key={stat.label}>
-              <p className="text-3xl font-bold text-primary sm:text-4xl">{stat.value}</p>
-              <p className="mt-1 text-sm font-medium text-muted-foreground">{stat.label}</p>
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* Rappel contact */}

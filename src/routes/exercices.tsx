@@ -85,7 +85,7 @@ const FILTERS = ["Tous", "Chimie", "Physique", "Maths"] as const;
 type Filter = (typeof FILTERS)[number];
 
 const FILTER_CLASS_ACTIVE =
-  "rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground";
+  "rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-background";
 const FILTER_CLASS_INACTIVE =
   "rounded-full bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-primary/10";
 
@@ -107,9 +107,9 @@ function StatusBadge({ status }: { status: Status }) {
 }
 
 const SUBJECT_STYLES = {
-  Chimie: "bg-subject-chimie",
-  Physique: "bg-subject-physique",
-  Maths: "bg-subject-maths",
+  Chimie: { band: "bg-subject-chimie", text: "text-subject-chimie" },
+  Physique: { band: "bg-subject-physique", text: "text-subject-physique" },
+  Maths: { band: "bg-subject-maths", text: "text-subject-maths" },
 } as const;
 
 function ExerciseCard({
@@ -122,11 +122,11 @@ function ExerciseCard({
   onCopy: (id: string) => void;
 }) {
   return (
-    <article className="overflow-hidden rounded-2xl border border-border bg-card">
-      <div aria-hidden className={`h-1.5 w-full ${SUBJECT_STYLES[exercise.subject]}`} />
+    <article className="exercise-sheet overflow-hidden rounded-2xl border border-border transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-lg">
+      <div aria-hidden className={`h-1.5 w-full ${SUBJECT_STYLES[exercise.subject].band}`} />
       <div className="p-5">
         <div className="flex flex-wrap items-start justify-between gap-2">
-          <p className="flex items-center gap-1.5 font-mono text-sm font-bold tracking-wide text-primary">
+          <p className={`flex items-center gap-1.5 font-mono text-sm font-bold ${SUBJECT_STYLES[exercise.subject].text}`}>
             <SubjectIcon subject={exercise.subject} />
             {exercise.id}
           </p>
@@ -136,7 +136,7 @@ function ExerciseCard({
           <span className="rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-secondary-foreground">
             {exercise.subject}
           </span>
-          <span className="text-xs text-muted-foreground">{exercise.chapter}</span>
+          <span className={`font-mono text-[11px] font-medium uppercase ${SUBJECT_STYLES[exercise.subject].text}`}>{exercise.chapter}</span>
         </div>
         <p className="mt-3 text-sm leading-relaxed text-foreground">{exercise.statement}</p>
         {exercise.status === "preparation" ? (

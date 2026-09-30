@@ -6,10 +6,29 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig({
-  tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
-    server: { entry: "server" },
-  },
-});
+// Build GitHub Pages (GITHUB_PAGES=1) : site 100 % statique servi sous /<nom-du-repo>/,
+// pages pré-générées ; la correction passe par la fonction Supabase « corriger » (VITE_CORRIGER_URL).
+// Sans GITHUB_PAGES : build Lovable / serveur habituel, inchangé.
+const pages = process.env["GITHUB_PAGES"] === "1";
+const base = process.env["PAGES_BASE"] ?? "/jang-bac-helper/";
+
+export default defineConfig(
+  pages
+    ? {
+        vite: { base },
+        nitro: false,
+        tanstackStart: {
+          server: { entry: "server" },
+          spa: { enabled: true },
+          prerender: { enabled: true, crawlLinks: true },
+          router: { basepath: base },
+        },
+      }
+    : {
+        tanstackStart: {
+          // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
+          // nitro/vite builds from this
+          server: { entry: "server" },
+        },
+      },
+);

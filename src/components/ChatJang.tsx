@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { corriger } from "@/lib/corriger.functions";
+import { CORRIGER_URL, corrigerViaSupabase } from "@/lib/corriger-client";
 
 type Msg = { from: "jang" | "eleve"; text: string };
 
@@ -78,7 +79,9 @@ export function ChatJang({
     let reply: string;
     try {
       const res = await Promise.race([
-        corrigerFn({ data: { query, userId: getUserId() } }),
+        CORRIGER_URL
+          ? corrigerViaSupabase(query, getUserId())
+          : corrigerFn({ data: { query, userId: getUserId() } }),
         timeout,
       ]);
       if (res === "timeout") reply = TROP_LONG;

@@ -32,7 +32,8 @@ function JangReply({ text }: { text: string }) {
       .replace(/[*#_:]/g, " ")
       .replace(/^[^\p{L}]+/u, "")
       .replace(/\s+/g, " ")
-      .trim();
+      .trim()
+      .toUpperCase(); // Gemini écrit parfois « LA MÉthODE »
     const title = Object.keys(RUBRIC_TONES).find((label) => normalized.startsWith(label));
     return (
       <span key={`${index}-${line}`} className={title ? `block font-mono text-xs font-medium ${RUBRIC_TONES[title]}` : "block min-h-[1lh]"}>

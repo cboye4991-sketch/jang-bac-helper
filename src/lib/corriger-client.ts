@@ -15,12 +15,15 @@ export async function corrigerViaSupabase(query: string, userId: string): Promis
       body: JSON.stringify({ query, userId }),
       signal: AbortSignal.timeout(58000),
     });
-    if (!res.ok) return { kind: "erreur" };
-    const json = (await res.json()) as Partial<CorrigerResult> & { text?: string; message?: string };
+    const json = (await res.json().catch(() => ({}))) as Partial<CorrigerResult> & {
+      text?: string;
+      message?: string;
+      detail?: string;
+    };
     if (json.kind === "ok" && typeof json.text === "string") return { kind: "ok", text: json.text };
     if (json.kind === "refus") return { kind: "refus", message: typeof json.message === "string" ? json.message : "" };
-    return { kind: "erreur" };
+    return { kind: "erreur", detail: json.detail ?? `Fonction corriger : HTTP ${res.status}` };
   } catch {
-    return { kind: "erreur" };
+    return { kind: "erreur", detail: "Fonction corriger injoignable" };
   }
 }

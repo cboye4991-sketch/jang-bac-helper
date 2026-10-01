@@ -54,7 +54,7 @@ Deno.serve(async (req) => {
   const apiKey = Deno.env.get("DIFY_API_KEY");
   if (!apiKey) {
     console.error("DIFY_API_KEY manquant");
-    return reponse({ kind: "erreur" }, origin, 500);
+    return reponse({ kind: "erreur", detail: "Clé API absente du serveur (secret DIFY_API_KEY non configuré)" }, origin, 500);
   }
 
   try {
@@ -69,19 +69,28 @@ Deno.serve(async (req) => {
       signal: AbortSignal.timeout(55000),
     });
     if (!res.ok) {
-      console.error("Dify", res.status, await res.text().catch(() => ""));
-      return reponse({ kind: "erreur" }, origin, 502);
+      const brut = await res.text().catch(() => "");
+      console.error("Dify", res.status, brut);
+      let detail = `Dify ${res.status}`;
+      try {
+        const j = JSON.parse(brut);
+        detail += " : " + [j.code, j.message].filter(Boolean).join(" — ").slice(0, 160);
+      } catch { /* corps non JSON */ }
+      return reponse({ kind: "erreur", detail }, origin, 502);
     }
     const json = await res.json();
+    if (json?.data?.status === "failed") {
+      return reponse({ kind: "erreur", detail: `Workflow Dify en échec : ${String(json.data.error ?? "").slice(0, 160)}` }, origin, 502);
+    }
     const outputs = json?.data?.outputs ?? {};
     const text = typeof outputs.text === "string" ? outputs.text.trim() : "";
     if (text) return reponse({ kind: "ok", text }, origin);
     if (typeof outputs.message_erreur === "string" && outputs.message_erreur.trim()) {
       return reponse({ kind: "refus", message: nettoyerRefus(outputs.message_erreur) }, origin);
     }
-    return reponse({ kind: "erreur" }, origin, 502);
+    return reponse({ kind: "erreur", detail: "Réponse Dify sans sortie text ni message_erreur" }, origin, 502);
   } catch (e) {
     console.error("Dify fetch error", e);
-    return reponse({ kind: "erreur" }, origin, 502);
+    return reponse({ kind: "erreur", detail: "Dify injoignable ou trop lent" }, origin, 502);
   }
 });

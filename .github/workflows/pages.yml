@@ -21,6 +21,8 @@ concurrency:
 
 jobs:
   build:
+    # Voie 2 seulement : ne tourne que si la variable CORRIGER_URL est définie (sinon : voie 1 Cloudflare)
+    if: ${{ vars.CORRIGER_URL != '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

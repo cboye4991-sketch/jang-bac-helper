@@ -87,7 +87,7 @@ export function ChatJang({
       if (res === "timeout") reply = TROP_LONG;
       else if (res.kind === "ok") reply = res.text;
       else if (res.kind === "refus") reply = res.message || REFUS;
-      else reply = INDISPO;
+      else reply = res.detail ? `${INDISPO}.\nDétail technique : ${res.detail}` : INDISPO;
     } catch {
       reply = INDISPO;
     } finally {

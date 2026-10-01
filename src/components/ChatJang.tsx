@@ -3,7 +3,13 @@ import { useServerFn } from "@tanstack/react-start";
 import { corriger } from "@/lib/corriger.functions";
 import { CORRIGER_URL, corrigerViaSupabase } from "@/lib/corriger-client";
 
-type Msg = { from: "jang" | "eleve"; text: string };
+type Msg = { from: "jang" | "eleve"; text: string; similaireId?: string };
+
+// ID d'exercice dans un message élève (« jng pc 7 », « JNG-PC-07 »…), comme le nœud EXTRAIRE_ID de Dify
+function idExercice(query: string): string | null {
+  const m = query.match(/JNG[\s_-]*PC[\s_-]*0*(\d{1,2})/i);
+  return m?.[1] ? `JNG-PC-${m[1].padStart(2, "0")}` : null;
+}
 
 const ACCUEIL =
   "Salut ! Envoie l'ID d'un exercice suivi de ta réponse. Exemple : JNG-PC-01 : C = 0,05/500 = 0,0001 mol/L";
@@ -77,6 +83,7 @@ export function ChatJang({
       timer = setTimeout(() => r("timeout"), 60000);
     });
     let reply: string;
+    let similaireId: string | undefined;
     try {
       const res = await Promise.race([
         CORRIGER_URL
@@ -85,7 +92,12 @@ export function ChatJang({
         timeout,
       ]);
       if (res === "timeout") reply = TROP_LONG;
-      else if (res.kind === "ok") reply = res.text;
+      else if (res.kind === "ok") {
+        reply = res.text;
+        // Module D : proposer de vérifier l'exercice « À TOI », sauf si c'était déjà une vérification
+        const id = idExercice(query);
+        if (id && !/\bsimilaire\b/i.test(query) && /À TOI/.test(res.text)) similaireId = id;
+      }
       else if (res.kind === "refus") reply = res.message || REFUS;
       else reply = res.detail ? `${INDISPO}.\nDétail technique : ${res.detail}` : INDISPO;
     } catch {
@@ -93,7 +105,7 @@ export function ChatJang({
     } finally {
       clearTimeout(timer);
     }
-    setMessages((m) => [...m, { from: "jang", text: reply }]);
+    setMessages((m) => [...m, similaireId ? { from: "jang", text: reply, similaireId } : { from: "jang", text: reply }]);
     setLoading(false);
   }
 
@@ -127,6 +139,23 @@ export function ChatJang({
             }`}
           >
             {m.from === "jang" ? <JangReply text={m.text} /> : m.text}
+            {m.similaireId && (
+              <button
+                type="button"
+                onClick={() => {
+                  const prefixe = `${m.similaireId} · similaire : `;
+                  setInput(prefixe);
+                  requestAnimationFrame(() => {
+                    const el = inputRef.current;
+                    el?.focus();
+                    el?.setSelectionRange(prefixe.length, prefixe.length);
+                  });
+                }}
+                className="mt-2 inline-flex items-center gap-1 rounded-full border border-primary/40 bg-secondary px-3 py-1 font-sans text-xs font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              >
+                ✍️ J'ai fait l'exercice similaire
+              </button>
+            )}
           </div>
         ))}
         {loading && (

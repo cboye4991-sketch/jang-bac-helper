@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChatJang } from "@/components/ChatJang";
 import { SubjectIcon } from "@/components/Illustrations";
+import { ID_VALIDE } from "@/lib/defi";
 
 export const Route = createFileRoute("/exercices")({
   head: () => ({
@@ -166,6 +167,16 @@ function Exercices() {
   const [chatInput, setChatInput] = useState("");
   const chatInputRef = useRef<HTMLTextAreaElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [defiId, setDefiId] = useState<string | null>(null);
+
+  // Lien « Défi WhatsApp » : …/exercices/?ex=JNG-PC-07 → l'exercice est présenté et pré-rempli
+  useEffect(() => {
+    const ex = new URLSearchParams(window.location.search).get("ex")?.toUpperCase() ?? null;
+    if (!ex || !ID_VALIDE.test(ex)) return;
+    setDefiId(ex);
+    setChatInput(`${ex} : `);
+    setTimeout(() => chatInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 300);
+  }, []);
 
   async function copyId(id: string) {
     setChatInput(`${id} : `);
@@ -204,7 +215,7 @@ function Exercices() {
         Choisis ton exercice, copie son ID, puis envoie l'ID et ta réponse.
       </p>
 
-      <ChatJang input={chatInput} setInput={setChatInput} inputRef={chatInputRef} />
+      <ChatJang input={chatInput} setInput={setChatInput} inputRef={chatInputRef} defiId={defiId} />
 
       <div className="mt-8 flex flex-wrap gap-2" role="group" aria-label="Filtrer par matière">
         {FILTERS.map((f) => (

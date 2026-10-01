@@ -5,6 +5,7 @@ import { CORRIGER_URL, corrigerViaSupabase } from "@/lib/corriger-client";
 import { DUREE_BAC_BLANC_MS, EXERCICES_BAC } from "@/lib/exercices-bac";
 import { arreterVoix, parler, voixDisponible } from "@/lib/voix";
 import { ID_VALIDE, lienDefi } from "@/lib/defi";
+import { ajouterCorrection } from "@/lib/historique";
 
 type Msg = {
   from: "jang" | "eleve";
@@ -180,6 +181,7 @@ export function ChatJang({
       if (res === "timeout") reponse.text = TROP_LONG;
       else if (res.kind === "ok") {
         reponse.text = res.text;
+        ajouterCorrection({ exerciceId: id, question: query, reponse: res.text });
         if (id) {
           reponse.exerciceId = id;
           // ✍️ « J'ai fait l'exercice similaire » seulement sous une vraie correction

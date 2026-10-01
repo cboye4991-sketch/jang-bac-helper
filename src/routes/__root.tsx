@@ -14,8 +14,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function navLinkClass({ isActive }: { isActive: boolean }) {
   return isActive
-    ? "rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground"
-    : "rounded-lg px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground";
+    ? "rounded-lg bg-primary px-1.5 py-1.5 text-xs font-semibold text-primary-foreground sm:px-3 sm:text-sm"
+    : "rounded-lg px-1.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground sm:px-3 sm:text-sm";
 }
 
 function SiteHeader() {
@@ -32,6 +32,12 @@ function SiteHeader() {
           </Link>
           <Link to="/exercices" activeProps={{ className: navLinkClass({ isActive: true }) }} className={navLinkClass({ isActive: false })}>
             Exercices
+          </Link>
+          <Link to="/historique" activeProps={{ className: navLinkClass({ isActive: true }) }} className={navLinkClass({ isActive: false })}>
+            Historique
+          </Link>
+          <Link to="/conseils" activeProps={{ className: navLinkClass({ isActive: true }) }} className={navLinkClass({ isActive: false })}>
+            Conseils
           </Link>
           <Link to="/contact" activeProps={{ className: navLinkClass({ isActive: true }) }} className={navLinkClass({ isActive: false })}>
             Contact

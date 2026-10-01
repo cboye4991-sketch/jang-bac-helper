@@ -6,6 +6,7 @@ import { DUREE_BAC_BLANC_MS, EXERCICES_BAC } from "@/lib/exercices-bac";
 import { arreterVoix, parler, voixDisponible } from "@/lib/voix";
 import { ID_VALIDE, lienDefi } from "@/lib/defi";
 import { ajouterCorrection } from "@/lib/historique";
+import { demarrerDictee, dicteeDisponible, type Dictee } from "@/lib/dictee";
 
 type Msg = {
   from: "jang" | "eleve";
@@ -107,11 +108,24 @@ export function ChatJang({
   const [maintenant, setMaintenant] = useState(() => Date.now());
   const [lecture, setLecture] = useState<number | null>(null);
   const [voixOk, setVoixOk] = useState(false);
+  const [micOk, setMicOk] = useState(false);
+  const [ecoute, setEcoute] = useState(false);
+  const [infoMic, setInfoMic] = useState<string | null>(null);
+  const dicteeRef = useRef<Dictee | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const corrigerFn = useServerFn(corriger);
 
-  useEffect(() => setVoixOk(voixDisponible()), []);
-  useEffect(() => () => arreterVoix(), []);
+  useEffect(() => {
+    setVoixOk(voixDisponible());
+    setMicOk(dicteeDisponible());
+  }, []);
+  useEffect(
+    () => () => {
+      arreterVoix();
+      dicteeRef.current?.arreter();
+    },
+    [],
+  );
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
@@ -153,6 +167,8 @@ export function ChatJang({
 
   async function envoyer(query: string) {
     if (!query || loading) return;
+    dicteeRef.current?.arreter();
+    setInfoMic(null);
     arreterVoix();
     setLecture(null);
     setMessages((m) => [...m, { from: "eleve", text: query }]);
@@ -207,6 +223,42 @@ export function ChatJang({
     }
     setMessages((m) => [...m, ...ajout]);
     setLoading(false);
+  }
+
+  // Note vocale : la dictée remplit la zone de saisie, l'élève relit et envoie elle-même
+  function basculerDictee() {
+    if (ecoute) {
+      dicteeRef.current?.arreter();
+      return;
+    }
+    arreterVoix();
+    setLecture(null);
+    const base = input.trim();
+    const idBase = idExercice(base);
+    setInfoMic("🎙️ J'écoute… Dis ta réponse, par exemple « C égale 0 virgule 1 mole par litre ».");
+    setEcoute(true);
+    dicteeRef.current = demarrerDictee({
+      onTexte: (texte) => {
+        // L'ID déjà tapé (bouton « Copier l'ID ») n'est pas répété si l'élève le redit
+        const sansId = idBase ? texte.replace(/^JNG-PC-\d{2}\s*:\s*/i, "") : texte;
+        setInput(base ? `${base} ${sansId}`.replace(/\s+/g, " ") : sansId);
+      },
+      onFin: () => {
+        setEcoute(false);
+        dicteeRef.current = null;
+        setInfoMic((m) =>
+          m?.startsWith("🎙️") ? "✏️ Relis ta réponse, corrige si besoin, puis envoie." : m,
+        );
+        requestAnimationFrame(() => inputRef.current?.focus());
+      },
+      onErreur: (message) => setInfoMic(`⚠️ ${message}`),
+    });
+    if (!dicteeRef.current) {
+      setEcoute(false);
+      setInfoMic(
+        "⚠️ La dictée n'est pas disponible sur ce navigateur. Tape ta réponse au clavier.",
+      );
+    }
   }
 
   function demanderIndice() {
@@ -350,6 +402,12 @@ export function ChatJang({
         </button>
       </div>
 
+      {infoMic ? (
+        <p role="status" className="bg-card px-3 pt-2 text-xs text-muted-foreground">
+          {infoMic}
+        </p>
+      ) : null}
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -373,9 +431,26 @@ export function ChatJang({
           }}
           rows={2}
           maxLength={4000}
-          placeholder="JNG-PC-01 : ta réponse…"
+          placeholder={micOk ? "JNG-PC-01 : ta réponse… (ou 🎤 Vocal)" : "JNG-PC-01 : ta réponse…"}
           className="min-h-[44px] flex-1 resize-none rounded-lg border border-input bg-background px-3 py-2 font-mono text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
         />
+        {micOk ? (
+          <button
+            type="button"
+            onClick={basculerDictee}
+            disabled={loading}
+            aria-pressed={ecoute}
+            aria-label={ecoute ? "Arrêter la note vocale" : "Répondre par note vocale"}
+            title="Note vocale : parle, relis, puis envoie"
+            className={`rounded-lg border px-3 py-2.5 text-sm font-semibold transition-colors disabled:opacity-50 ${
+              ecoute
+                ? "animate-pulse border-correction bg-correction text-white"
+                : "border-primary/40 bg-secondary text-primary hover:bg-primary hover:text-primary-foreground"
+            }`}
+          >
+            {ecoute ? "⏹ Stop" : "🎤 Vocal"}
+          </button>
+        ) : null}
         <button
           type="submit"
           disabled={loading || !input.trim()}

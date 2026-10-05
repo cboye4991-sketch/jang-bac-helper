@@ -3,6 +3,8 @@
 > **GET 409 — Atelier IA** · Swiss UMEF University, Campus de Dakar · 2025–2026
 > Équipe : **Cheikh BOYE** · **Adama DIOP** · Enseignant : M. Malick Faye Diagne
 
+> 📦 **Rendu GET 409 du 6 octobre** : page d'accueil du projet, vidéo et liens vers tous les livrables → [dépôt `jang`](https://github.com/cboye4991-sketch/jang#-rendu-du-6-octobre--par-où-commencer)
+
 **▶ Application en ligne : [cboye4991-sketch.github.io/jang-bac-helper](https://cboye4991-sketch.github.io/jang-bac-helper/)**
 
 ![Jàng sur téléphone : accueil, exercices, correction, historique](docs/captures/00-planche-jang.jpg)

@@ -14,19 +14,19 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function navLinkClass({ isActive }: { isActive: boolean }) {
   return isActive
-    ? "rounded-lg bg-primary px-1.5 py-1.5 text-xs font-semibold text-primary-foreground sm:px-3 sm:text-sm"
-    : "rounded-lg px-1.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground sm:px-3 sm:text-sm";
+    ? "rounded-lg bg-primary px-1 py-1.5 text-xs font-semibold min-[400px]:px-1.5 text-primary-foreground sm:px-3 sm:text-sm"
+    : "rounded-lg px-1 py-1.5 text-xs font-medium min-[400px]:px-1.5 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground sm:px-3 sm:text-sm";
 }
 
 function SiteHeader() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
+      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-2 px-3 sm:px-4">
         <Link to="/" className="flex shrink-0 items-baseline gap-2">
-          <span className="font-display text-xl font-extrabold text-foreground">Jàng</span>
+          <span className="font-display text-lg font-extrabold text-foreground min-[400px]:text-xl">Jàng</span>
           <span className="hidden font-hand text-xl font-semibold text-correction min-[480px]:inline">apprendre</span>
         </Link>
-        <nav aria-label="Navigation principale" className="flex items-center gap-0.5">
+        <nav aria-label="Navigation principale" className="flex min-w-0 items-center gap-0 overflow-x-auto [scrollbar-width:none] min-[400px]:gap-0.5">
           <Link to="/" activeOptions={{ exact: true }} activeProps={{ className: navLinkClass({ isActive: true }) }} className={navLinkClass({ isActive: false })}>
             Accueil
           </Link>

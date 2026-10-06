@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jàng — les vidéos</title>
+<style>
+:root{--paper:#f6f9f8;--ink:#10231e;--muted:#52665f;--green:#2f6f5a;--line:#dce8e4;--card:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0f1613;--ink:#e6eee9;--muted:#9db0a7;--green:#4fc29d;--line:#22302a;--card:#151f1b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:28px 16px 48px}
+h1{font-size:clamp(26px,5vw,38px);margin:0 0 6px;letter-spacing:-.01em}
+.lead{color:var(--muted);margin:0 0 24px}
+.grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:760px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.card h2{font-size:18px;margin:2px 4px 4px}
+.card p{margin:0 4px 12px;color:var(--muted);font-size:14.5px}
+video{width:100%;height:auto;border-radius:10px;background:#000;display:block}
+.vertical video{max-height:78vh;width:auto;max-width:100%;margin:0 auto}
+a{color:var(--green);font-weight:600}
+.links{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px 20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Jàng en vidéo</h1>
+  <p class="lead">GET 409 · Atelier IA — Cheikh BOYE et Adama DIOP · Swiss UMEF University, campus de Dakar</p>
+  <div class="grid">
+    <section class="card">
+      <h2>Teaser de présentation · 73 s</h2>
+      <p>Le problème d'Aminata, puis ce que fait Jàng : ce qui est juste, la première erreur, la méthode. Voix off et sous-titres.</p>
+      <video controls preload="metadata" playsinline poster="apercu-teaser.jpg">
+        <source src="jang-teaser.mp4" type="video/mp4">
+        <track kind="subtitles" src="jang-teaser.vtt" srclang="fr" label="Français">
+      </video>
+    </section>
+    <section class="card vertical">
+      <h2>« Le prof qui répond à minuit » · 60 s</h2>
+      <p>Format vertical pour les réseaux : Moussa bloque sur un exo à minuit, son grand frère dort, le prof ne répond pas… Jàng, si.</p>
+      <video controls preload="metadata" playsinline poster="apercu-promo.jpg">
+        <source src="jang-promo-60s.mp4" type="video/mp4">
+        <track kind="subtitles" src="jang-promo-60s.vtt" srclang="fr" label="Français">
+      </video>
+    </section>
+  </div>
+  <p class="links"><a href="../">Ouvrir l'application Jàng</a><a href="https://github.com/cboye4991-sketch/jang">Dossier du projet (GitHub)</a></p>
+</div>
+</body>
+</html>

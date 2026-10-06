@@ -7,6 +7,10 @@
 
 **▶ Application en ligne : [cboye4991-sketch.github.io/jang-bac-helper](https://cboye4991-sketch.github.io/jang-bac-helper/)**
 
+**▶ Les deux vidéos de Jàng : [cboye4991-sketch.github.io/jang-bac-helper/video/](https://cboye4991-sketch.github.io/jang-bac-helper/video/)**, le teaser de présentation (73 s) et « Le prof qui répond à minuit » (60 s, format vertical).
+
+[![Teaser de Jàng](public/video/apercu-teaser.jpg)](https://cboye4991-sketch.github.io/jang-bac-helper/video/)
+
 ![Jàng sur téléphone : accueil, exercices, correction, historique](docs/captures/00-planche-jang.jpg)
 
 *Jàng* veut dire « apprendre » en wolof. L'application s'adresse aux élèves de **Terminale S des lycées de région**
